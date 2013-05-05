@@ -92,12 +92,8 @@ function filter_content_for_quiz_prereqs($content) {
 function get_quiz_result_for_person($personName, $quizId) {
     global $wpdb;
 
-    $resultRow = $wpdb->get_row(
-        $wpdb->prepare("SELECT * FROM ".WPSQT_TABLE_RESULTS." WHERE person_name = %p AND item_id = %i AND pass = 1",
-            array($personName, $quizId))
-        , ARRAY_A
-    );
-    return !(empty($resultRow));
+    $results = $wpdb->get_results('SELECT * FROM `'.WPSQT_TABLE_RESULTS. '` WHERE `person_name` = "'.$personName.'" AND `item_id` = "'.$quizId.' AND pass = 1"', ARRAY_A);
+    return (count($results) != 0);
 }
 
 # Remove error message for prereq short code when prereqs met
